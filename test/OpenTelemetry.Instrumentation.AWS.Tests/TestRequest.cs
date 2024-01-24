@@ -13,9 +13,9 @@ using Amazon.Runtime.Internal.Util;
 
 namespace OpenTelemetry.Instrumentation.AWS.Tests;
 
-internal class TestRequest(ParameterCollection parameters) : IRequest
+internal class TestRequest(ParameterCollection parameters = null) : IRequest
 {
-    private readonly ParameterCollection parameters = parameters;
+    private readonly ParameterCollection parameters = parameters ?? new ParameterCollection();
 
     public string RequestName => throw new NotImplementedException();
 
