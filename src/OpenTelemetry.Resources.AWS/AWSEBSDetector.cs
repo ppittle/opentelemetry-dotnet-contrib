@@ -54,28 +54,27 @@ internal sealed class AWSEBSDetector : IResourceDetector
 
     internal static List<KeyValuePair<string, object>> ExtractResourceAttributes(AWSEBSMetadataModel? metadata)
     {
-        var resourceAttributes = new List<KeyValuePair<string, object>>()
-        {
-            new(AWSSemanticConventions.AttributeCloudProvider, "aws"),
-            new(AWSSemanticConventions.AttributeCloudPlatform, "aws_elastic_beanstalk"),
-            new(AWSSemanticConventions.AttributeServiceName, "aws_elastic_beanstalk"),
-        };
+        var resourceAttributes =
+            new List<KeyValuePair<string, object>>()
+                .AddAttributeCloudProvider("aws")
+                .AddAttributeCloudPlatform("aws_elastic_beanstalk")
+                .AddAttributeServiceName("aws_elastic_beanstalk");
 
         if (metadata != null)
         {
             if (metadata.EnvironmentName != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeServiceNamespace, metadata.EnvironmentName));
+                resourceAttributes.AddAttributeServiceNamespace(metadata.EnvironmentName);
             }
 
             if (metadata.DeploymentId != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeServiceInstanceID, metadata.DeploymentId));
+                resourceAttributes.AddAttributeServiceInstanceID(metadata.DeploymentId);
             }
 
             if (metadata.VersionLabel != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeServiceVersion, metadata.VersionLabel));
+                resourceAttributes.AddAttributeServiceVersion(metadata.VersionLabel);
             }
         }
 

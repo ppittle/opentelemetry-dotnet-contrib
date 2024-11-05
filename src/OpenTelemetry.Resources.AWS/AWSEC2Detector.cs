@@ -43,38 +43,37 @@ internal sealed class AWSEC2Detector : IResourceDetector
 
     internal static List<KeyValuePair<string, object>> ExtractResourceAttributes(AWSEC2IdentityDocumentModel? identity, string hostName)
     {
-        var resourceAttributes = new List<KeyValuePair<string, object>>()
-        {
-            new(AWSSemanticConventions.AttributeCloudProvider, "aws"),
-            new(AWSSemanticConventions.AttributeCloudPlatform, "aws_ec2"),
-            new(AWSSemanticConventions.AttributeHostName, hostName),
-        };
+        var resourceAttributes =
+            new List<KeyValuePair<string, object>>()
+                .AddAttributeCloudProvider("aws")
+                .AddAttributeCloudPlatform("aws_ec2")
+                .AddAttributeHostName(hostName);
 
         if (identity != null)
         {
             if (identity.AccountId != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeCloudAccountID, identity.AccountId));
+                resourceAttributes.AddAttributeCloudAccountID(identity.AccountId);
             }
 
             if (identity.AvailabilityZone != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeCloudAvailabilityZone, identity.AvailabilityZone));
+                resourceAttributes.AddAttributeCloudAvailabilityZone(identity.AvailabilityZone);
             }
 
             if (identity.InstanceId != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeHostID, identity.InstanceId));
+                resourceAttributes.AddAttributeHostID(identity.InstanceId);
             }
 
             if (identity.InstanceType != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeHostType, identity.InstanceType));
+                resourceAttributes.AddAttributeHostType(identity.InstanceType);
             }
 
             if (identity.Region != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeCloudRegion, identity.Region));
+                resourceAttributes.AddAttributeCloudRegion(identity.Region);
             }
         }
 

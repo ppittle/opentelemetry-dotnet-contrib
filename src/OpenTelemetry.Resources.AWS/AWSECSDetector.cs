@@ -28,18 +28,16 @@ internal sealed class AWSECSDetector : IResourceDetector
             return Resource.Empty;
         }
 
-        var resourceAttributes = new List<KeyValuePair<string, object>>()
-        {
-            new(AWSSemanticConventions.AttributeCloudProvider, "aws"),
-            new(AWSSemanticConventions.AttributeCloudPlatform, "aws_ecs"),
-        };
-
+        var resourceAttributes =
+            new List<KeyValuePair<string, object>>()
+                .AddAttributeCloudProvider("aws")
+                .AddAttributeCloudPlatform("aws_ecs");
         try
         {
             var containerId = GetECSContainerId(AWSECSMetadataPath);
             if (containerId != null)
             {
-                resourceAttributes.Add(new KeyValuePair<string, object>(ContainerAttributes.AttributeContainerId, containerId));
+                resourceAttributes.AddAttributeContainerId(containerId);
             }
         }
         catch (Exception ex)
@@ -95,15 +93,13 @@ internal sealed class AWSECSDetector : IResourceDetector
         }
 
         var resourceAttributes = new List<KeyValuePair<string, object>>()
-        {
-            new(AWSSemanticConventions.AttributeCloudResourceId, containerArn),
-            new(AWSSemanticConventions.AttributeEcsContainerArn, containerArn),
-            new(AWSSemanticConventions.AttributeEcsClusterArn, clusterArn),
-        };
+            .AddAttributeCloudResourceId(containerArn)
+            .AddAttributeEcsContainerArn(containerArn)
+            .AddAttributeEcsClusterArn(clusterArn);
 
         if (taskResponse.RootElement.TryGetProperty("AvailabilityZone", out var availabilityZoneElement) && availabilityZoneElement.ValueKind == JsonValueKind.String)
         {
-            resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeCloudAvailabilityZone, availabilityZoneElement.GetString()!));
+            resourceAttributes.AddAttributeCloudAvailabilityZone(availabilityZoneElement.GetString()!);
         }
 
         if (!taskResponse.RootElement.TryGetProperty("LaunchType", out var launchTypeElement))
@@ -120,7 +116,7 @@ internal sealed class AWSECSDetector : IResourceDetector
 
         if (launchType != null)
         {
-            resourceAttributes.Add(new KeyValuePair<string, object>(AWSSemanticConventions.AttributeEcsLaunchtype, launchType));
+            resourceAttributes.AddAttributeEcsLaunchtype(launchType);
         }
         else
         {
