@@ -1,3 +1,4 @@
+OpenTelemetry.AWS.SemanticConventionVersion
 OpenTelemetry.Extensions.AWS.AWSXRayIdGenerator
 OpenTelemetry.Extensions.AWS.Trace.AWSXRayPropagator
 OpenTelemetry.Extensions.AWS.Trace.AWSXRayPropagator.AWSXRayPropagator() -> void
