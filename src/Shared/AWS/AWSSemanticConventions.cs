@@ -200,9 +200,14 @@ internal static partial class AWSSemanticConventions
 
     #region Http
     /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeHttpStatusCode"/>
+    [Obsolete("Replaced by <c>http.response.status_code</c>.")]
     public static Activity? SetTagAttributeHttpStatusCode(this Activity? activity, int value)
         => SetTag(activity, x => x.AttributeHttpStatusCode, value);
+    /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeHttpResponseStatusCode"/>
+    public static Activity? SetTagAttributeHttpResponseStatusCode(this Activity? activity, int value)
+        => SetTag(activity, x => x.AttributeHttpResponseStatusCode, value);
     /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeHttpScheme"/>
+    [Obsolete("Replaced by <c>url.scheme</c> instead.")]
     public static T AddAttributeHttpScheme<T>(this T attributes, object? value, bool addIfEmpty = false)
         where T : IList<KeyValuePair<string, object>> => Add(attributes, x => x.AttributeHttpScheme, value, addIfEmpty);
     /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeHttpTarget"/>
@@ -247,6 +252,9 @@ internal static partial class AWSSemanticConventions
     /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeUrlPath"/>
     public static T AddAttributeUrlPath<T>(this T attributes, object? value, bool addIfEmpty = false)
         where T : IList<KeyValuePair<string, object>> => Add(attributes, x => x.AttributeUrlPath, value, addIfEmpty);
+    /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeUrlScheme"/>
+    public static T AddAttributeUrlScheme<T>(this T attributes, object? value, bool addIfEmpty = false)
+        where T : IList<KeyValuePair<string, object>> => Add(attributes, x => x.AttributeUrlQuery, value, addIfEmpty);
     /// <inheritdoc cref="AWSSemanticConventionsBase.AttributeServiceName"/>
     public static T AddAttributeUrlQuery<T>(this T attributes, object? value, bool addIfEmpty = false)
         where T : IList<KeyValuePair<string, object>> => Add(attributes, x => x.AttributeUrlQuery, value, addIfEmpty);

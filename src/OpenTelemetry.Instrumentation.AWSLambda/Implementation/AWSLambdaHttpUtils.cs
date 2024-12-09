@@ -64,6 +64,7 @@ internal class AWSLambdaHttpUtils
         if (httpScheme != null)
         {
             tags.AddAttributeHttpScheme(httpScheme, addIfEmpty: true);
+            tags.AddAttributeUrlScheme(httpScheme, addIfEmpty: true);
         }
 
         if (httpTarget != null)
@@ -107,12 +108,15 @@ internal class AWSLambdaHttpUtils
         {
             case APIGatewayProxyResponse response:
                 activity.SetTagAttributeHttpStatusCode(response.StatusCode);
+                activity.SetTagAttributeHttpResponseStatusCode(response.StatusCode);
                 break;
             case APIGatewayHttpApiV2ProxyResponse responseV2:
                 activity.SetTagAttributeHttpStatusCode(responseV2.StatusCode);
+                activity.SetTagAttributeHttpResponseStatusCode(responseV2.StatusCode);
                 break;
             case ApplicationLoadBalancerResponse albResponse:
                 activity.SetTagAttributeHttpStatusCode(albResponse.StatusCode);
+                activity.SetTagAttributeHttpResponseStatusCode(albResponse.StatusCode);
                 break;
             default:
                 break;
